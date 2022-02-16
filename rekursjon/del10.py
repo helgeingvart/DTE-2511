@@ -128,14 +128,85 @@ fib(100)
 
 # %%
 def is_palindrome(streng) :
-    if (len(streng) <= 1) :
-        print(streng)
+    if (len(streng) <= 1) :   # Basis tilfelle 1: Stopper dersom strengen er redusert til kun midterste karakter (odde antall) eller ingenting (partall)
         return True
-    elif (streng[0] != streng[len(streng) - 1]) :
+    elif (streng[0] != streng[len(streng) - 1]) :  # Basis tilfelle: Asymmetri detektert. Stopper og returnerer.
         return False
     else:
-        is_palindrome(streng[1:len(streng)-1])
+        returnVal = is_palindrome(streng[1:len(streng)-1])
+        return returnVal
 
-print(type(is_palindrome("agnes i senga")))
+print(is_palindrome("agnes i senga"))
+print(is_palindrome("anna"))
+
+# %% [markdown]
+# ## Såkalte hjelpe-funksjoner i rekursive kall
+# 
+# Denne koden, selv om den er svært enkel i sin form, og derfor lett å forstå seg på, er ikke veldig effektiv pga. at den lager nye strenger
+# for hvert kall som krever ny minne-allokering for hvert rekursive kall.
+# Vi kan effekstivisere dette ved å legg inn posisjons-angivelser i strengen 
+
+# %%
+def is_palindrome_helper(streng, low, high) :
+    if (high <= low) :
+        return True
+    elif streng[low] != streng[high] :
+        return False
+    else :
+        return is_palindrome_helper(streng, low+1, high-1)
+
+def is_palidrome_v2(streng) :
+    returnVal = is_palindrome_helper(streng, 0, len(streng)-1)  # Angi laveste og høyeste posisjon.
+    return returnVal
+
+print(is_palidrome_v2("anna"))
+
+# %% [markdown]
+# # Case: Towers of Hanoi
+# 
+# La oss prøve å formulere dette som en algoritme.
+
+# %%
+def move_it(n, fra, til, hjelp) :
+    if n == 1:
+        print("Flytter skive 1 fra", fra, "til", til)
+    else :
+        move_it(n-1, fra, hjelp, til) 
+        print("Flytter skive", n, "fra", fra, "til", til)
+        move_it(n-1, hjelp, til, fra)
+
+move_it(3, 'A', 'C', 'B')
+
+# %% [markdown]
+# ## Binært søk
+# 
+# Nytt case, søking i ordnet liste etter posisjon til et element. Vi opererer med variable posisjoner i lista, som angir søke-området. Søke-området innsnevres til høyre eller venstre for midterste posisjon til søke-området, avhengig av størrelsen på verdien det søkes etter.
+
+# %%
+def recursiveSearch(lst, value) :
+    return recursiveSearchHelper(lst, value, 0, len(lst)-1)
+
+def recursiveSearchHelper(liste, value, low, high) :
+    
+    if (high < low or low < 0 or high < 0 or low > len(liste) - 1 or high > len(liste) - 1) : # Sanity check: Vindus-pekere utenfor range på mulige liste-indexer
+        return -1  # Algoritmen feilet, betyr at vi ikke fant verdien.
+    elif liste[low] == value :
+        return low # Fant verdi på laveste del av søke-vindu
+    elif liste[high] == value :
+        return high  # Fant verdi på høyeste del av søke-vindu
+    
+    mid = (low + high) // 2  # Midt posisjon, men rundet nedover.
+    if (liste[mid] == value) :
+        return mid    # Fant verdi på ny midt-posisjon.
+    if (value < liste[mid]) :
+        high = mid-1 # Jeg kan steppe meg et hakk lengre ned, siden jeg allerede har testet at verdien ikke ligger akkurat på midten
+    elif (value > liste[mid]) :
+        low = mid+1  # Samme her, jeg stepper meg ett hakker lengre opp, mid trengs ikke å tas med i søkevindu.
+    val = recursiveSearchHelper(liste, value, low, high)
+    return val
+
+val = recursiveSearch([1,2,3,6,7,19,34], 6)
+print (val)
+
 
 

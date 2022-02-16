@@ -14122,10 +14122,10 @@ Den kan enkelt defineres som $f_{n} = f_{n-1} + f_{n-2}$, der $f_1 = f_2 = 1$. V
 <li>Kan være vanskelig å debugge
 Rekursjon må derfor brukes med varsomhet.</li>
 </ul>
-<p>Sidenote: Credit til Christopher kjente til en mekanisme kalt funksjons-caching som kan brukes for å redusere antall operasjoner som gjøres, spesielt i en rekursiv sammenheng, og da spesielt når du har nøstede rekursjons-trær slik som vist i figur. Instrumentert kode for dette kan være som under</p>
+<p>Sidenote: Credit til Christopher kjente til en mekanisme kalt funksjons-caching som kan brukes for å redusere antall like funksjonskall i en programkjøring vha. caching. Dette er spesielt nyttig i rekursiv sammenheng, og da spesielt når du har nøstede rekursjons-trær slik som vist i figur. Instrumentert kode for dette kan være som under:</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
@@ -14148,29 +14148,6 @@ Rekursjon må derfor brukes med varsomhet.</li>
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>354224848179261915075</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14190,15 +14167,121 @@ print (m(4))</code></pre>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>   <span class="c1"># Basis tilfelle 1: Stopper dersom strengen er redusert til kun midterste karakter (odde antall) eller ingenting (partall)</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">streng</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">streng</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="p">:</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">streng</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">streng</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="p">:</span>  <span class="c1"># Basis tilfelle: Asymmetri detektert. Stopper og returnerer.</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">is_palindrome</span><span class="p">(</span><span class="n">streng</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">returnVal</span> <span class="o">=</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">streng</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">returnVal</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">is_palindrome</span><span class="p">(</span><span class="s2">&quot;agnes i senga&quot;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome</span><span class="p">(</span><span class="s2">&quot;agnes i senga&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome</span><span class="p">(</span><span class="s2">&quot;anna&quot;</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="S%C3%A5kalte-hjelpe-funksjoner-i-rekursive-kall">S&#229;kalte hjelpe-funksjoner i rekursive kall<a class="anchor-link" href="#S%C3%A5kalte-hjelpe-funksjoner-i-rekursive-kall">&#182;</a></h2><p>Denne koden, selv om den er svært enkel i sin form, og derfor lett å forstå seg på, er ikke veldig effektiv pga. at den lager nye strenger
+for hvert kall som krever ny minne-allokering for hvert rekursive kall.
+Vi kan effekstivisere dette ved å legg inn posisjons-angivelser i strengen</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome_helper</span><span class="p">(</span><span class="n">streng</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">high</span> <span class="o">&lt;=</span> <span class="n">low</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">elif</span> <span class="n">streng</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="o">!=</span> <span class="n">streng</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">is_palindrome_helper</span><span class="p">(</span><span class="n">streng</span><span class="p">,</span> <span class="n">low</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">is_palidrome_v2</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">returnVal</span> <span class="o">=</span> <span class="n">is_palindrome_helper</span><span class="p">(</span><span class="n">streng</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Angi laveste og høyeste posisjon.</span>
+    <span class="k">return</span> <span class="n">returnVal</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">is_palidrome_v2</span><span class="p">(</span><span class="s2">&quot;anna&quot;</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h1 id="Case:-Towers-of-Hanoi">Case: Towers of Hanoi<a class="anchor-link" href="#Case:-Towers-of-Hanoi">&#182;</a></h1><p>La oss prøve å formulere dette som en algoritme.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">move_it</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="n">til</span><span class="p">,</span> <span class="n">hjelp</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flytter skive 1 fra&quot;</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="s2">&quot;til&quot;</span><span class="p">,</span> <span class="n">til</span><span class="p">)</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="n">move_it</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="n">hjelp</span><span class="p">,</span> <span class="n">til</span><span class="p">)</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flytter skive&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;fra&quot;</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="s2">&quot;til&quot;</span><span class="p">,</span> <span class="n">til</span><span class="p">)</span>
+        <span class="n">move_it</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hjelp</span><span class="p">,</span> <span class="n">til</span><span class="p">,</span> <span class="n">fra</span><span class="p">)</span>
+
+<span class="n">move_it</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Bin%C3%A6rt-s%C3%B8k">Bin&#230;rt s&#248;k<a class="anchor-link" href="#Bin%C3%A6rt-s%C3%B8k">&#182;</a></h2><p>Nytt case, søking i ordnet liste etter posisjon til et element. Vi opererer med variable posisjoner i lista, som angir søke-området. Søke-området innsnevres til høyre eller venstre for midterste posisjon til søke-området, avhengig av størrelsen på verdien det søkes etter.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">recursiveSearch</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">return</span> <span class="n">recursiveSearchHelper</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">recursiveSearchHelper</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span> <span class="p">:</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">high</span> <span class="o">&lt;</span> <span class="n">low</span> <span class="ow">or</span> <span class="n">low</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">high</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">low</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">high</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="c1"># Sanity check: Vindus-pekere utenfor range på mulige liste-indexer</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>  <span class="c1"># Algoritmen feilet, betyr at vi ikke fant verdien.</span>
+    <span class="k">elif</span> <span class="n">liste</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">low</span> <span class="c1"># Fant verdi på laveste del av søke-vindu</span>
+    <span class="k">elif</span> <span class="n">liste</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">high</span>  <span class="c1"># Fant verdi på høyeste del av søke-vindu</span>
+    
+    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Midt posisjon, men rundet nedover.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">mid</span>    <span class="c1"># Fant verdi på ny midt-posisjon.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">:</span>
+        <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span> <span class="c1"># Jeg kan steppe meg et hakk lengre ned, siden jeg allerede har testet at verdien ikke ligger akkurat på midten</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">:</span>
+        <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span>  <span class="c1"># Samme her, jeg stepper meg ett hakker lengre opp, mid trengs ikke å tas med i søkevindu.</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">recursiveSearchHelper</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">val</span>
+
+<span class="n">val</span> <span class="o">=</span> <span class="n">recursiveSearch</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">34</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">val</span><span class="p">)</span>
 </pre></div>
 
      </div>
