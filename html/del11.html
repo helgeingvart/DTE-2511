@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>del10</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>del11</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -13971,285 +13971,7 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Rekursjon:-Funksjoner-som-kaller-p%C3%A5-seg-selv">Rekursjon: Funksjoner som kaller p&#229; seg selv<a class="anchor-link" href="#Rekursjon:-Funksjoner-som-kaller-p%C3%A5-seg-selv">&#182;</a></h1><p>Rekursive funksjoner ligner litt på loops, men der får fram den iterative prosessen ved å la funksjonen kalle på seg selv.
-Vi kan tenke på mange problemstillinger fra dagliglivet som kan formulerers rekursivt. F.eks. gange:</p>
-
-<pre><code>def gå_et_skritt:
-    hvis ikke framme:
-        gå_et_skritt()
-    ellers
-        return</code></pre>
-<p>Det enkleste for å illustrere konseptet programmeringsmessig er å begynne med et eksempel: En funksjon som skriver ut en stadig økende liste av påfølgende tall.</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">biggest_number</span> <span class="o">=</span> <span class="mi">10</span>
-
-<span class="k">def</span> <span class="nf">print_number</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">number</span> <span class="o">&lt;=</span> <span class="n">biggest_number</span><span class="p">)</span> <span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>   <span class="c1"># Vi skriver ut</span>
-        <span class="n">print_number</span><span class="p">(</span><span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Vi kaller på oss selv med tallet, bare økt med 1</span>
-    <span class="k">else</span> <span class="p">:</span>
-        <span class="k">return</span>
-    
-<span class="n">print_number</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Vi kan se på et annet mer matnyttig eksempel: Regne ut n! som dere kjenner fra matematikken.</p>
-<p>Dere vet også at $n! = n*(n-1)*(n-2)*....*2*1$</p>
-<p>Dette kan enkelt løses med en for loop i python</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Gi meg et positivt heltall&quot;</span><span class="p">)</span>
-<span class="n">produkt</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="p">:</span>
-    <span class="n">produkt</span> <span class="o">=</span> <span class="n">produkt</span><span class="o">*</span><span class="n">i</span>
-
-<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Svaret er &quot;</span><span class="p">,</span> <span class="n">produkt</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>MEN: Dette kan også løses på en annen måte, vha. rekursjon. La oss benytte oss av at vi kan omskrive fakultet som</p>
-<ol>
-<li>$n! = n*(n-1)!$</li>
-<li>$(n-1)! = (n-1)*(n-2)!$</li>
-<li>$(n-2)! = (n-2)*(n-3)!$
-osv.</li>
-</ol>
-<p>Vi ser at vi har en rekursiv regel her, der beregning i øverste steg avhenger av samme beregningen i neste steg, som igjen avhenger av samme beregning i neste steg osv... Helt til man kommer ned til tallet 1 som er slutt-betingelsen. Hvordan kan vi implementere dette vha. rekursjon?</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Rekursjon starter med største tallet i produktet</span>
-<span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span> 
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="n">n</span><span class="o">*</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">else</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>   
-
-<span class="n">factorial</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Vi ser at vi MÅ ha en grein i kontrollflyten som stopper rekursjonen.</p>
-<ul>
-<li>Kalles basis-operasjonen<ul>
-<li>Grunnen til dette er at det er den enkleste varianten som kan bli spurt etter i kallet til den rekursive funksjonen</li>
-<li>Kalles også stopp-betingelsen eller "stopping condition"</li>
-</ul>
-</li>
-</ul>
-<p>Den andre greina tar seg av <strong>sub-problemet</strong>, der gjerne det rekursive kallet skjer.</p>
-<h3 id="Oppgaver-til-dere:">Oppgaver til dere:<a class="anchor-link" href="#Oppgaver-til-dere:">&#182;</a></h3><ol>
-<li>Lag en rekursiv funksjon for å regne ut $2^n$ </li>
-<li>Lag en rekursiv funksjon for å regne ut summen av alle tallene fra 1 til n.</li>
-</ol>
-
-</div>
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Case:-Fibonacci-tall">Case: Fibonacci tall<a class="anchor-link" href="#Case:-Fibonacci-tall">&#182;</a></h2><p>Fibonacci sekvensen er en enkel rekursiv formel, eller differens-ligning, som har inspirert fagområder som arkitektur, biologi, geometri etc..
-Den kan enkelt defineres som $f_{n} = f_{n-1} + f_{n-2}$, der $f_1 = f_2 = 1$. Vi skal nå se på rekursjon for å regne ut disse tallene:</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span> 
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-
-<span class="n">fib</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Selv om algoritmen blir svært elegant og lesbar er det som skjer bak kulissene nokså komplisert:</p>
-<p><img src="..\resources\img\fibonacci.png"></p>
-<p>F.eks vil fib(10) kreve 177 rekursive kall, og fib(30) 2692537....</p>
-<ul>
-<li>Betyr at det kan være kostbart ressursmessig å bruke rekursjon (minne/CPU-tid)</li>
-<li>Kan være vanskelig å debugge
-Rekursjon må derfor brukes med varsomhet.</li>
-</ul>
-<p>Sidenote: Credit til Christopher kjente til en mekanisme kalt funksjons-caching som kan brukes for å redusere antall like funksjonskall i en programkjøring vha. caching. Dette er spesielt nyttig i rekursiv sammenheng, og da spesielt når du har nøstede rekursjons-trær slik som vist i figur. Instrumentert kode for dette kan være som under:</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
-
-<span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span> 
-    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-
-<span class="n">fib</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> 
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Igjen en liten oppgave til dere. Oppgave 15.2.1 i boka (den nederste varianten). Hva er output av følgende rutine (gjøres uten å implementere)</p>
-
-<pre><code>def m(r) :
-    return r * m(r-1) if r &gt; 2 else r
-
-print (m(4))</code></pre>
-<h2 id="Case:-Palindrom-deteksjon">Case: Palindrom deteksjon<a class="anchor-link" href="#Case:-Palindrom-deteksjon">&#182;</a></h2><p>Et palindrome er en tekst-streng som er symmetrisk, f.eks. "agnes i senga". Vi ønsker å lage en algoritme for å bestemme om teksten er et palindrom. Her kan vi benytte fleksibiliteten i python med å ta ut sub-strenger og behandle disse separat.</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">:</span>   <span class="c1"># Basis tilfelle 1: Stopper dersom strengen er redusert til kun midterste karakter (odde antall) eller ingenting (partall)</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">streng</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">streng</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="p">:</span>  <span class="c1"># Basis tilfelle: Asymmetri detektert. Stopper og returnerer.</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">returnVal</span> <span class="o">=</span> <span class="n">is_palindrome</span><span class="p">(</span><span class="n">streng</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">returnVal</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome</span><span class="p">(</span><span class="s2">&quot;agnes i senga&quot;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_palindrome</span><span class="p">(</span><span class="s2">&quot;anna&quot;</span><span class="p">))</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="S%C3%A5kalte-hjelpe-funksjoner-i-rekursive-kall">S&#229;kalte hjelpe-funksjoner i rekursive kall<a class="anchor-link" href="#S%C3%A5kalte-hjelpe-funksjoner-i-rekursive-kall">&#182;</a></h2><p>Denne koden, selv om den er svært enkel i sin form, og derfor lett å forstå seg på, er ikke veldig effektiv pga. at den lager nye strenger
-for hvert kall som krever ny minne-allokering for hvert rekursive kall.
-Vi kan effekstivisere dette ved å legg inn posisjons-angivelser i strengen</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">is_palindrome_helper</span><span class="p">(</span><span class="n">streng</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">high</span> <span class="o">&lt;=</span> <span class="n">low</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="n">streng</span><span class="p">[</span><span class="n">low</span><span class="p">]</span> <span class="o">!=</span> <span class="n">streng</span><span class="p">[</span><span class="n">high</span><span class="p">]</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">else</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="n">is_palindrome_helper</span><span class="p">(</span><span class="n">streng</span><span class="p">,</span> <span class="n">low</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">is_palidrome_v2</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span> <span class="p">:</span>
-    <span class="n">returnVal</span> <span class="o">=</span> <span class="n">is_palindrome_helper</span><span class="p">(</span><span class="n">streng</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">streng</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Angi laveste og høyeste posisjon.</span>
-    <span class="k">return</span> <span class="n">returnVal</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">is_palidrome_v2</span><span class="p">(</span><span class="s2">&quot;anna&quot;</span><span class="p">))</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Case:-Towers-of-Hanoi">Case: Towers of Hanoi<a class="anchor-link" href="#Case:-Towers-of-Hanoi">&#182;</a></h1><p>La oss prøve å formulere dette som en algoritme.</p>
-
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">move_it</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="n">til</span><span class="p">,</span> <span class="n">hjelp</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flytter skive 1 fra&quot;</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="s2">&quot;til&quot;</span><span class="p">,</span> <span class="n">til</span><span class="p">)</span>
-    <span class="k">else</span> <span class="p">:</span>
-        <span class="n">move_it</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="n">hjelp</span><span class="p">,</span> <span class="n">til</span><span class="p">)</span> 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Flytter skive&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;fra&quot;</span><span class="p">,</span> <span class="n">fra</span><span class="p">,</span> <span class="s2">&quot;til&quot;</span><span class="p">,</span> <span class="n">til</span><span class="p">)</span>
-        <span class="n">move_it</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hjelp</span><span class="p">,</span> <span class="n">til</span><span class="p">,</span> <span class="n">fra</span><span class="p">)</span>
-
-<span class="n">move_it</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Bin%C3%A6rt-s%C3%B8k">Bin&#230;rt s&#248;k<a class="anchor-link" href="#Bin%C3%A6rt-s%C3%B8k">&#182;</a></h2><p>Nytt case, søking i ordnet liste etter posisjon til et element. Vi opererer med variable posisjoner i lista, som angir søke-området. Søke-området innsnevres til høyre eller venstre for midterste posisjon til søke-området, avhengig av størrelsen på verdien det søkes etter.</p>
+<h1 id="Effektivisering-av-algoritmer">Effektivisering av algoritmer<a class="anchor-link" href="#Effektivisering-av-algoritmer">&#182;</a></h1><p>Vi har sett på en rekursiv håndtering av binært søk. Kunne dette blitt gjort ved hjelp av en ren løkke for å spare "overhead" ved rekursjon? Svaret er ja</p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -14258,25 +13980,24 @@ Vi kan effekstivisere dette ved å legg inn posisjons-angivelser i strengen</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">recursiveSearch</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
-    <span class="k">return</span> <span class="n">recursiveSearchHelper</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">binarySearch</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 
-<span class="k">def</span> <span class="nf">recursiveSearchHelper</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">low</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">high</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Midt posisjon, men rundet nedover.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">mid</span> <span class="c1"># Fant verdi på ny midt-posisjon.</span>
+            <span class="k">break</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">:</span>
+            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span> <span class="c1"># Jeg kan steppe meg et hakk lengre ned, siden jeg allerede har testet at verdien ikke ligger akkurat på midten</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">:</span>
+            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span>  <span class="c1"># Samme her, jeg stepper meg ett hakker lengre opp, mid trengs ikke å tas med i søkevindu.</span>
     
-    <span class="k">if</span> <span class="p">(</span><span class="n">high</span> <span class="o">&lt;</span> <span class="n">low</span><span class="p">)</span> <span class="p">:</span>  <span class="c1"># Stopping condition, </span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>  <span class="c1"># Midt posisjon, men rundet nedover.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">return</span> <span class="n">mid</span>    <span class="c1"># Fant verdi på ny midt-posisjon.</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">:</span>
-        <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span><span class="o">-</span><span class="mi">1</span> <span class="c1"># Jeg kan steppe meg et hakk lengre ned, siden jeg allerede har testet at verdien ikke ligger akkurat på midten</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">liste</span><span class="p">[</span><span class="n">mid</span><span class="p">])</span> <span class="p">:</span>
-        <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span>  <span class="c1"># Samme her, jeg stepper meg ett hakker lengre opp, mid trengs ikke å tas med i søkevindu.</span>
-    <span class="n">val</span> <span class="o">=</span> <span class="n">recursiveSearchHelper</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">val</span>
+    <span class="k">return</span> <span class="n">index</span>
 
-<span class="n">val</span> <span class="o">=</span> <span class="n">recursiveSearch</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">34</span><span class="p">],</span> <span class="mi">9</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">val</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">binarySearch</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">34</span><span class="p">],</span> <span class="mi">34</span><span class="p">)</span> <span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14296,7 +14017,7 @@ Vi kan effekstivisere dette ved å legg inn posisjons-angivelser i strengen</p>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>-1
+<pre>7
 </pre>
 </div>
 </div>
@@ -14305,6 +14026,404 @@ Vi kan effekstivisere dette ved å legg inn posisjons-angivelser i strengen</p>
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Dette eksemplet viser at det er mange måter å løse en programmerings-oppgave på. En enda enklere måte å finne tallet i lista på ville være å gjøre det med et lineært søk slik som dette:</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">linearSearch</span><span class="p">(</span><span class="n">liste</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">liste</span><span class="p">))</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="n">index</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">linearSearch</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">34</span><span class="p">],</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Veldig enkel kode, som til og med støtter ikke-ordnede lister. Så hvorfor ikke bare bruke en slik algoritme?</p>
+<p>Dette skyldes antall operasjoner vi kan risikere å måtte utføre for å finne indeksen. Hvis tallet var plassert på slutten av lista, og lista var n lang, ville vi måtte utføre n sammenligninger.</p>
+<p>Et binært søk vil utføre langt færre, faktisk log(n). Dette forstås gjennom å forestille oss at lista er n = 2^m lang. Vi halverer søkevindu hver gang, som betyr at vi kun utfører m operasjoner. Tar vi log på begge sider av ligninga over får vi m = 2 log (n).</p>
+<p>En slik analyse av algoritmens tidsforbruk (som oftest måles i antall operasjoner), kan gjøres ved å se på orden. Da ser vi bort fra konstante faktorer i uttrykket, og ser bare på uttryket for n. I eksemplet over blir det $O(\log(n))$, mens for linært søk blir det $O(n)$.</p>
+<p>La oss se på noen flere enkle eksempler</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">linear</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+        <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">n</span> 
+    <span class="k">return</span> <span class="nb">sum</span>
+
+<span class="k">def</span> <span class="nf">quadratic</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+            <span class="nb">sum</span> <span class="o">=</span> <span class="nb">sum</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
+    <span class="k">return</span> <span class="nb">sum</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="k">def</span> <span class="nf">time_it</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">func</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;It took&quot;</span><span class="p">,</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span><span class="s2">&quot;with&quot;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="s2">&quot;iterations on&quot;</span><span class="p">,</span><span class="n">func</span><span class="p">)</span>
+
+<span class="n">time_it</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
+<span class="n">time_it</span><span class="p">(</span><span class="n">linear</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+
+<span class="n">time_it</span><span class="p">(</span><span class="n">quadratic</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">time_it</span><span class="p">(</span><span class="n">quadratic</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Naturlig nok vil altså en indre løkke som gjøres n ganger for hver iterasjon som den ytre løkken gjør n ganger være av orden $O(n^2)$. Men hva om vi terminerer den indre løkken etter 20 iterasjoner? Anta tiden det tar for en operasjon er $T(1) = c$. Da kan vi lage regnskapet $T(n) = 20\cdot c\cdot n = O(n)$. Siden 20c bare er en skaleringsfaktor, sider vi at vi fortsatt har $O(n)$ operasjoner. Hva med følgende kode:</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Tilfelle 1</span>
+<span class="c1"># n=100</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">4</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span>
+
+<span class="c1"># Tilfelle 2</span>
+<span class="n">e</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">liste</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">liste</span><span class="p">:</span>
+    <span class="c1"># gjør noe</span>
+    <span class="k">pass</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">liste</span><span class="p">:</span>
+        <span class="c1"># Gjør noe annet</span>
+        <span class="k">pass</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Diskusjon....">Diskusjon....<a class="anchor-link" href="#Diskusjon....">&#182;</a></h3>
+</div>
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Analyse-av-rekursive-algoriter:-Case-Towers-of-Hanoi">Analyse av rekursive algoriter: Case Towers of Hanoi<a class="anchor-link" href="#Analyse-av-rekursive-algoriter:-Case-Towers-of-Hanoi">&#182;</a></h2><p>Denne var som følger</p>
+<ol>
+<li>Flytt de første n-1 skivene fra A til C via B</li>
+<li>Flytt skive n fra A til B</li>
+<li>Flytt de andre n-1 skivene fra C til B via A</li>
+</ol>
+<p>La oss anta at $T(n)$ angir tida det tar å flytte n skiver, og at T(1)=1</p>
+<p>Da kan vi nøste oss fram til orden på følgende måte via n skiver: $T(n-1) + 1 + T(n-1) = 2T(n-1) + 1$. Vi vet også at $T(n-1) = 2T(n-2) + 1$. Ergo
+$T(n) = 2(2T(n-2) + 1) + 1 = 2(2(T(n-3) + 1) + 1) + 1 = ... = 2^{n-1}T(1) + 2^{n-2} + ... + 2 + 1 = (2^n -1) = O(2^n)$. Sistnevnte overgang kan vises vha. summeformelen av de n første leddene i en geometrisk rekke, her er k=1/2...</p>
+<p>Samme type analyse kan gjøres for Fibonacci tall.</p>
+<h2 id="Oppgave-til-forsamlingen:-Forbedring-av-ytelse-p%C3%A5-fibonacci-tall">Oppgave til forsamlingen: Forbedring av ytelse p&#229; fibonacci tall<a class="anchor-link" href="#Oppgave-til-forsamlingen:-Forbedring-av-ytelse-p%C3%A5-fibonacci-tall">&#182;</a></h2><p>Husk tilbake til rekursiv rutine for å finne fibonacci tall (NB: Her ser jeg bort fra f_0 = 0)</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fib</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>21</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Oppgave: Kan denne gjøres mer effektiv ved en loop?</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fib_loop</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span> <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">fn_minus_1</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">fn_minus_2</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="p">:</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="n">fn_minus_1</span> <span class="o">+</span> <span class="n">fn_minus_2</span>
+        <span class="n">fn_minus_2</span> <span class="o">=</span> <span class="n">fn_minus_1</span>
+        <span class="n">fn_minus_1</span> <span class="o">=</span> <span class="n">fn</span>
+        <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">fn</span>
+
+<span class="n">fib_loop</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>8</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Og hva er orden av denne? Ser da vitterlig ut som $O(n)$ :-)</p>
+<h2 id="Selection-sort">Selection sort<a class="anchor-link" href="#Selection-sort">&#182;</a></h2><p>For å se på hvordan denne fungerer, se boka under kapittel 16.4.2. Algoritmen er laget på den måten at for hvert element i lista, så sammenlignes alle elementene framover i lista. Man ser etter det minste elementet blant de elementene som gjenstår i lista, og bytter dette elementet med dette. Om man ikke finner noe, så hopper man bare videre til neste.</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">selectionSort</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span> <span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">minimumValue</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">minimumIndex</span> <span class="o">=</span> <span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">minimumValue</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">minimumElement</span> <span class="o">=</span> <span class="n">liste</span><span class="p">[</span><span class="n">minimumIndex</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">minimumElement</span> <span class="o">&lt;</span> <span class="n">element</span> <span class="p">:</span>
+            <span class="n">liste</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">minimumElement</span>
+            <span class="n">liste</span><span class="p">[</span><span class="n">minimumIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span>
+
+<span class="n">liste</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">selectionSort</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">liste</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Hva er orden her? Lista er n lang. For hvert element i lista gjør man et søk som potensielt er n-1 langt. Antall sammenligninger kan røfli summeres til noe slikt som
+$ (n-1) + (n-2) + (n-3) + ... + 1$. Vi har en summeformel for dette. Dette er $\frac{n(n+1)}{2} - n = n^2/2 - n/2$. (-n på slutten der fordi vi startet i (n-1)). Altså $O(n^2)$</p>
+<h1 id="Case-study:-Finne-prim-tall.">Case study: Finne prim-tall.<a class="anchor-link" href="#Case-study:-Finne-prim-tall.">&#182;</a></h1><p>Motivasjon: Det finnes en $150.000 pris for den som greier å finne et primtall som inneholder minst 100.000.000 siffer. (<a href="https://www.eff.org/awards/coop">https://www.eff.org/awards/coop</a>)
+Hvordan kan vi finne en raskest mulig algoritme for dette?</p>
+<ul>
+<li>Enkleste versjon: Gå gjennom alle tall opp til n og sjekk at de ikke er delelig med alle tall som er under n. Vi ser at dette er en $O(n^2)$ algoritme. Ikke særlig effektiv.</li>
+<li>Andre versjon: Vi sjekker bare delelighet med odde-tall, siden alle par-tall er delelig med 2. Dessverre fortsatt $O(n^2)$.</li>
+<li>Tredje versjon: Det kan vises at vi kun trenger å sjekke delelighet med tallene under $\sqrt{n}$. Dette minker kompleksiteten til $O(n\sqrt{n})$</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="k">def</span> <span class="nf">findPrimes</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">primtall</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">candidate</span> <span class="o">=</span> <span class="mi">2</span>
+    
+    <span class="k">while</span> <span class="p">(</span><span class="n">candidate</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+
+        <span class="n">isPrime</span> <span class="o">=</span> <span class="kc">True</span>    
+        <span class="n">root</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">candidate</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Det at vi plusser på en er en avrunding oppover.</span>
+
+        <span class="k">for</span> <span class="n">divisor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">root</span><span class="p">):</span>  <span class="c1"># Sjekker i forhold til divisor på alle tall under rota av kandidaten</span>
+            <span class="k">if</span> <span class="n">candidate</span> <span class="o">%</span> <span class="n">divisor</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+                <span class="n">isPrime</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isPrime</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">primtall</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+
+        <span class="n">candidate</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">primtall</span>
+
+<span class="n">findPrimes</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Algoritmen er ikke så effektiv, siden vi må kvadratrota må regnes ut for hver kandidat. Legg merke til at <code>int(sqrt(candidate))</code> økes med 1 kun mellom kandidat-tall som er kvadratisk. Ellers er det samme heltallsverdi hele tiden. Dersom vi gjør det slik at denne økes kun når <code>root*root &gt;= candidate</code> så sparer vi mye kvadratrot beregning.</p>
+<p>I tillegg er det slik at vi egentlig kun trenger å sjekke på primtall når det gjelder mulige divisorer. Dette siden andre tall er sammensatt (er multiplisert sammen) av andre primtall som er mindre, og derfor allerede blir sjekket når man sjekker selve primtallene.</p>
+<p>F.eks. vi trenger ikke sjekke om 13 er delelig med 6, siden vi allerede har sjekket om det er delelig med 3 og 2.</p>
+<p>Ny forbedret algoritme ser vi under</p>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">findPrimes</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">primtall</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">candidate</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">candidate</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">)</span> <span class="p">:</span>
+
+        <span class="n">isPrime</span> <span class="o">=</span> <span class="kc">True</span>    
+        <span class="k">if</span> <span class="p">(</span><span class="n">candidate</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">*</span><span class="n">root</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">root</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">divisor</span> <span class="ow">in</span> <span class="n">primtall</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">divisor</span> <span class="o">&lt;=</span> <span class="n">root</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="o">%</span> <span class="n">divisor</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">isPrime</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>   <span class="c1"># Vi ser ikke på mulige divisorer større en rota</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">isPrime</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">primtall</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+
+        <span class="n">candidate</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">primtall</span>
+
+<span class="n">findPrimes</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+<pre>[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]</pre>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Hvilken orden har denne rutina nå når vi bare sjekker mot tidligere detekterte primtall? Vel, da må vi anslå hvor mange primtall som er under et visst tall n. Det er mulig å vise via tallteori at dette vil være i størrelsesorden $n/log(n)$</p>
+<p>Dette fører til at siden vi nå bare sjekker divisorer som bare er primtall + at vi begrenser oss oppad til $\sqrt{n}$, så vil det totalt sett være $O(n\sqrt{n}/log(n))$</p>
+
+</div>
 </div>
 </body>
 
