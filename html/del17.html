@@ -13972,26 +13972,49 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Bin%C3%A6re-s%C3%B8ke-tre">Bin&#230;re s&#248;ke-tre<a class="anchor-link" href="#Bin%C3%A6re-s%C3%B8ke-tre">&#182;</a></h1><p>Et binært søke-tre består i likhet med en linket liste av noder som er koblet til andre noder. I motsetning til det binære treet "Heap" som vi har vært innom tidligere, vil ALLE nodene i venstre sub-tre være mindre eller lik parent/foreldre-node, og ALLE nodene i høyre sub-tre være større. I en heap trengte ikke dette være tilfelle, der var det nok at denne større/mindre betingelse var gyldig kun lokalt.</p>
-<p>Dette gjør at man må være mer nøye når man skal sette inn en ny node i et binært søketre. Traversering av strukturen blir derfor viktig å implementere på en riktig måte.</p>
+<p>Dette gjør at man må være mer nøye når man skal sette inn en ny node i et binært søketre.</p>
+<p>Traversering av strukturen kan gjøres på mange forskjellige måter, vi ser på såkalte "dybde-først" traverseringer.</p>
 <p>En annen viktig forskjell fra Heap er at vi nå gjør lagring av elementene i selve noden (slik for linket liste) istedenfor at strukturen støttes/backes av en liste.</p>
 
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">TreeNode</span> <span class="p">:</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">TreeNode</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span> <span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="nb">object</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="k">class</span> <span class="nc">BinarySearchTree</span> <span class="p">:</span>
+<span class="k">class</span> <span class="nc">BinarySearchTree</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span> <span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
+            <span class="k">while</span> <span class="n">current</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span>
+                <span class="k">if</span> <span class="nb">object</span> <span class="o">&lt;</span> <span class="n">current</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">left</span>
+                <span class="k">elif</span> <span class="nb">object</span> <span class="o">&gt;</span> <span class="n">current</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+                    <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">right</span>
+                <span class="k">else</span> <span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="k">if</span> <span class="nb">object</span> <span class="o">&lt;</span> <span class="n">parent</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span> 
+            <span class="k">else</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span> <span class="p">:</span>
         <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
@@ -14004,57 +14027,118 @@ a.anchor-link {
                 <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
                 <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">right</span>
             <span class="k">else</span> <span class="p">:</span>
-                <span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
-                <span class="k">return</span> <span class="n">path</span>  
-        
-        <span class="k">return</span> <span class="kc">False</span>
-            
+                <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="n">path</span>
 
-    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span> <span class="p">:</span>
-        <span class="n">node</span> <span class="o">=</span> <span class="n">TreeNode</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="n">node</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">return</span> 
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">path</span>
 
-        <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">object</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
+
+        <span class="c1"># First, locate item to be deleted</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="n">current</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span>
-            <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span>
-            <span class="n">left</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="nb">object</span> <span class="o">&lt;</span> <span class="n">current</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span>
                 <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">left</span>
-                <span class="n">left</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">elif</span> <span class="nb">object</span> <span class="o">&gt;</span> <span class="n">current</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+                <span class="n">parent</span> <span class="o">=</span> <span class="n">current</span>
                 <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">right</span>
             <span class="k">else</span> <span class="p">:</span>
-                <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># We don&#39;t accept insertion of duplicate elements in this version</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">current</span>  <span class="c1"># We found it</span>
+                <span class="k">break</span>
 
-        <span class="k">if</span> <span class="n">left</span> <span class="p">:</span>
-            <span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Case 1: No children, so it&#39;s a leaf node. Just remove the node. This is performed by removing the left/right node in parent</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">element</span> <span class="o">==</span> <span class="nb">object</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="p">:</span> 
+                <span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Case 2: One child. We hook the child onto the nodes&#39; parent.</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span>  <span class="c1"># Had only a left child</span>
+            <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">element</span> <span class="o">==</span> <span class="nb">object</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="k">else</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># For the sake of garbage collection of node. No strings attached to old child nodes. Parenthood is taken care of ;-)</span>
+        <span class="c1"># Case 2 continued</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">left</span> <span class="o">==</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span> <span class="c1"># Had only a right child</span>
+            <span class="k">if</span> <span class="n">parent</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">element</span> <span class="o">==</span> <span class="nb">object</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">else</span> <span class="p">:</span>
+                <span class="n">parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># For the sake of garbage collection of node. No strings attached to old child nodes. Parenthood is taken care of ;-)</span>
+        <span class="c1"># Case 3: Both nodes. First, find the minimum node in the right subtree. Exchange value of that node with the current, and then delete it</span>
+        <span class="c1"># The minimum node in the right subtree amounts to finding the leftmost child in that subtree (think about that for a sec ;-)</span>
         <span class="k">else</span> <span class="p">:</span>
-            <span class="n">parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">leftmost_parent</span> <span class="o">=</span> <span class="n">node</span>
+            <span class="n">leftmost</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">while</span> <span class="n">leftmost</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span> 
+                <span class="n">leftmost_parent</span> <span class="o">=</span> <span class="n">leftmost</span>
+                <span class="n">leftmost</span> <span class="o">=</span> <span class="n">leftmost</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">toReplace</span> <span class="o">=</span> <span class="n">leftmost</span><span class="o">.</span><span class="n">element</span>
+            <span class="c1"># The node to be removed is the one stored in &quot;leftmost&quot;. We remove it by attaching it&#39;s right child</span>
+            <span class="c1"># (it do not have a left, since it&#39;s the leftmost itself!) to the parent. Decide upon where to attach on parent</span>
+            <span class="k">if</span> <span class="n">leftmost_parent</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">element</span> <span class="o">==</span> <span class="n">leftmost</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>  <span class="c1"># This is the usual case, since we&#39;re spinning leftwards</span>
+                <span class="n">leftmost_parent</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">leftmost</span><span class="o">.</span><span class="n">right</span>
+            <span class="k">else</span> <span class="p">:</span>   <span class="c1"># But this will happen if the the parent is the &quot;node&quot; itself</span>
+                <span class="n">leftmost_parent</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">leftmost</span><span class="o">.</span><span class="n">right</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">element</span> <span class="o">=</span> <span class="n">toReplace</span>   <span class="c1"># Replace the value that is to be deleted</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__length</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">traverse_preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__preorder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
         
-    <span class="k">def</span> <span class="nf">findMin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__preorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">else</span> <span class="p">:</span>
-            <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root</span>
-            <span class="k">while</span> <span class="n">current</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span>
-                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">left</span>
-            <span class="k">return</span> <span class="n">current</span><span class="o">.</span><span class="n">element</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__preorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__preorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">traverse_inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__inorder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
         
+    <span class="k">def</span> <span class="nf">__inorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__inorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__inorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">traverse_postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__postorder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">__postorder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__postorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__postorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    
 <span class="n">bst</span> <span class="o">=</span> <span class="n">BinarySearchTree</span><span class="p">()</span>
+<span class="n">inserts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">inserts</span> <span class="p">:</span>
+    <span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
 
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">17</span><span class="p">)</span>
-<span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Ultimate test: remove root node :-)</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Should return False</span>
+<span class="n">bst</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">bst</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="mi">25</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">bst</span><span class="o">.</span><span class="n">findMin</span><span class="p">())</span>
+<span class="n">inserts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">21</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">inserts</span> <span class="p">:</span>
+    <span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+<span class="n">bst</span><span class="o">.</span><span class="n">traverse_inorder</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -14062,26 +14146,28 @@ a.anchor-link {
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[15, 20, 25]
-8
-</pre>
 </div>
-</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Oppgave:-Hvordan-finne-ut-om-et-tre-er-et-bin%C3%A6rt-s%C3%B8ketre?">Oppgave: Hvordan finne ut om et tre er et bin&#230;rt s&#248;ketre?<a class="anchor-link" href="#Oppgave:-Hvordan-finne-ut-om-et-tre-er-et-bin%C3%A6rt-s%C3%B8ketre?">&#182;</a></h2><p>Kan løses på flere måter, men vi prøver oss på en rekursiv variant:</p>
+<ol>
+<li>Finn ut om alle nodene på venstre side er mindre enn rot-node</li>
+<li>Finn ut om alle nodene på høyre side er mindre enn rot-node</li>
+</ol>
 
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span>
+</pre></div>
 
+     </div>
+</div>
+</div>
 </div>
 
 </div>
