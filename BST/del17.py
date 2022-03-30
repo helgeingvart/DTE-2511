@@ -147,14 +147,42 @@ class BinarySearchTree:
         self.__postorder(root.right)
         print(root.element)
 
+    def traverse_levelorder(self) :
+        fifo = []
+        fifo.append(self.__root)
+
+        while (len(fifo) != 0) :
+            current = fifo.pop(0)
+            print(current.element)
+            if current.left != None :
+                fifo.append(current.left)
+            if current.right != None :
+                fifo.append(current.right)
+
     def clear(self) :
         self.__root = None
-    
-    
+
+    def check_BST(self) :
+        return self.__is_BST(self.__root)
+
+    def __is_BST(self, root) :
+
+        if root == None :
+            return True
+            
+        if root.left != None and root.left.element > root.element :
+            return False
+        if root.right != None and root.right.element < root.element :
+            return False
+
+        return self.__is_BST(root.left) and self.__is_BST(root.right)
+        
 bst = BinarySearchTree()
 inserts = [12, 5, 15, 3, 7, 13, 17, 1, 9, 14, 20, 8, 11, 18]
 for element in inserts :
     bst.insert(element)
+
+print("Is binary search tree?", bst.check_BST())
 
 bst.delete(15)
 bst.delete(12)  # Ultimate test: remove root node :-)
@@ -165,6 +193,7 @@ inserts = [20, 10, 35, 5, 7, 3, 15, 23, 40, 21]
 for element in inserts :
     bst.insert(element)
 
+bst.traverse_levelorder()
 bst.traverse_inorder()
 
 

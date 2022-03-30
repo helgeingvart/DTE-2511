@@ -14120,14 +14120,42 @@ a.anchor-link {
         <span class="bp">self</span><span class="o">.</span><span class="n">__postorder</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">traverse_levelorder</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">fifo</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fifo</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">fifo</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">element</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span>
+                <span class="n">fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">None</span> <span class="p">:</span>
+                <span class="n">fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__root</span> <span class="o">=</span> <span class="kc">None</span>
-    
-    
+
+    <span class="k">def</span> <span class="nf">check_BST</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_BST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__root</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__is_BST</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span> <span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">root</span> <span class="o">==</span> <span class="kc">None</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+            
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">element</span> <span class="o">&gt;</span> <span class="n">root</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">element</span> <span class="o">&lt;</span> <span class="n">root</span><span class="o">.</span><span class="n">element</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_BST</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">left</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">__is_BST</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+        
 <span class="n">bst</span> <span class="o">=</span> <span class="n">BinarySearchTree</span><span class="p">()</span>
 <span class="n">inserts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">inserts</span> <span class="p">:</span>
     <span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Is binary search tree?&quot;</span><span class="p">,</span> <span class="n">bst</span><span class="o">.</span><span class="n">check_BST</span><span class="p">())</span>
 
 <span class="n">bst</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">bst</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>  <span class="c1"># Ultimate test: remove root node :-)</span>
@@ -14138,6 +14166,7 @@ a.anchor-link {
 <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">inserts</span> <span class="p">:</span>
     <span class="n">bst</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
 
+<span class="n">bst</span><span class="o">.</span><span class="n">traverse_levelorder</span><span class="p">()</span>
 <span class="n">bst</span><span class="o">.</span><span class="n">traverse_inorder</span><span class="p">()</span>
 </pre></div>
 
