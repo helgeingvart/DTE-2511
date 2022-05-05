@@ -63,7 +63,6 @@ class SecondOrderPolynomal :
         except ValueError as ex:
             raise PolynomialSolverException("Negative discriminant")
 
-
 try:
     polynom = SecondOrderPolynomal('a',1,-1)
     root1, root2 = polynom.findRoots()
